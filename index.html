@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build &amp; Own It &mdash; Testimony’s Path in IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-space:#0B1E33;--sky-deep:#12293F;--sky-mid:#1B3A5B;
+    --dawn:#E8A44C;--dawn-soft:#F2C078;--brass:#C9A24B;--brass-lite:#E4C877;
+    --verd:#3E7C74;--verd-lite:#5CA399;--cloud:#F5F7FA;--panel:#FBFAF5;
+    --ink:#12222E;--ink-soft:#3C5064;--line:rgba(255,255,255,.14);
+    --shadow:0 18px 44px rgba(3,12,22,.45);
+    --bg1:#0A1B2E;--bg2:#0E2740;--bg3:#12293F;--glow:rgba(232,164,76,.10);
+  }
+  :root{--bg1:#08111B;--bg2:#0C1A2A;--bg3:#091320;--glow:rgba(53,208,192,.12);--cover-glow:rgba(139,124,246,.4);--accent:#35D0C0;--accent-lite:#6FE3D6;--accent-deep:#1f9a8e;--accent2:#8B7CF6;--hero1:#0C1A2A;--hero2:#14243a;--scrip-ink:#164b45;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--cloud);background:var(--bg1);
+    background-image:radial-gradient(1200px 600px at 50% -10%, var(--glow), transparent 60%),
+      linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 42%,var(--bg3) 100%);
+    min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.7}
+  .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:tw 4s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.15}50%{opacity:.8}}
+  .wrap{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:0 16px 120px}
+  #cover{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;
+    background:radial-gradient(900px 520px at 50% 118%, var(--cover-glow), transparent 60%),linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 60%,var(--bg3) 100%)}
+  .cover-in{max-width:520px;animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .wings{font-size:46px;line-height:1;color:var(--accent-lite);filter:drop-shadow(0 6px 14px rgba(0,0,0,.4))}
+  .cover-eyebrow{font-family:'Saira Condensed',sans-serif;letter-spacing:.34em;text-transform:uppercase;font-size:12px;color:var(--accent-lite);margin:18px 0 6px}
+  .cover h1{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:clamp(38px,11vw,64px);line-height:.94;margin:0;color:#fff}
+  .cover h1 span{color:var(--accent-lite)}
+  .cover-sub{color:#cdddec;font-size:15px;line-height:1.5;margin:14px auto 4px;max-width:410px}
+  .verse{font-family:'Fraunces',Georgia,serif;font-style:italic;color:#f4e6cf;font-size:16px;line-height:1.55;margin:22px auto 2px;max-width:440px}
+  .verse b{display:block;font-family:'Saira Condensed',sans-serif;font-style:normal;font-weight:600;letter-spacing:.2em;font-size:11px;color:var(--accent-lite);margin-top:8px;text-transform:uppercase}
+  .field{margin:20px auto 0;max-width:360px;text-align:left}
+  .field label{display:block;font-family:'Saira Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:11px;color:#a9c2d6;margin:14px 4px 6px}
+  .field input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font-size:16px;font-family:inherit}
+  .field input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.1)}
+  .btn{cursor:pointer;border:none;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .btn-go{display:inline-block;margin-top:24px;padding:15px 40px;border-radius:999px;font-size:16px;color:#231a06;background:linear-gradient(180deg,var(--accent-lite),var(--accent));box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .btn-go:active{transform:translateY(1px)}
+  .hero{position:relative;padding:30px 20px 26px;margin:16px 0 6px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,var(--hero1) 0%,var(--hero2) 100%);border:1px solid var(--line);box-shadow:var(--shadow)}
+  .hero:before{content:"";position:absolute;left:-10%;right:-10%;bottom:-40%;height:80%;background:radial-gradient(closest-side, var(--cover-glow), transparent);pointer-events:none}
+  .cloud{position:absolute;background:rgba(255,255,255,.07);border-radius:40px;filter:blur(2px);pointer-events:none}
+  .c1{width:120px;height:26px;top:26px;left:-40px;animation:drift 26s linear infinite}
+  .c2{width:80px;height:18px;top:64px;right:-30px;animation:drift 34s linear infinite reverse}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(60px)}}
+  .hero-top{position:relative;display:flex;align-items:center;gap:10px;z-index:2}
+  .hero-wings{font-size:26px;color:var(--accent-lite)}
+  .tail{font-family:'Saira Condensed',sans-serif;letter-spacing:.18em;font-size:12px;color:#dbe6f0;border:1px solid rgba(255,255,255,.22);padding:5px 10px;border-radius:8px;background:rgba(0,0,0,.16)}
+  .edit{margin-left:auto;background:rgba(255,255,255,.08);border:1px solid var(--line);color:#cfe0ef;border-radius:9px;padding:7px 11px;font-size:12px;cursor:pointer;font-family:'Saira Condensed',sans-serif;letter-spacing:.12em}
+  .hero h2{position:relative;z-index:2;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:clamp(30px,8.5vw,46px);line-height:.96;margin:16px 0 2px}
+  .hero h2 small{display:block;font-size:14px;letter-spacing:.28em;color:var(--accent-lite);font-weight:600;margin-bottom:4px}
+  .hero-air{position:relative;z-index:2;font-family:'Fraunces',serif;font-style:italic;color:#f2e3ca;font-size:15px;margin-top:6px}
+  .gauge{position:relative;z-index:2;margin-top:18px}
+  .gauge-top{display:flex;justify-content:space-between;align-items:baseline;font-family:'Saira Condensed',sans-serif;letter-spacing:.14em;font-size:12px;color:#cfe0ef;text-transform:uppercase}
+  .gauge-top b{color:var(--accent-lite);font-size:15px}
+  .bar{height:12px;border-radius:999px;background:rgba(0,0,0,.28);margin-top:8px;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
+  .bar > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--accent2),var(--accent-lite),var(--accent));transition:width .8s cubic-bezier(.2,.7,.2,1)}
+  .tabs{position:sticky;top:0;z-index:20;display:flex;gap:6px;padding:10px 4px;margin:8px -4px 6px;overflow-x:auto;background:linear-gradient(180deg,var(--bg1),rgba(10,22,38,.7));backdrop-filter:blur(8px);scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#c4d6e6;font-family:'Saira Condensed',sans-serif;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:13px;padding:10px 14px;border-radius:11px;white-space:nowrap;transition:.2s}
+  .tab.on{background:linear-gradient(180deg,var(--accent-lite),var(--accent));color:#231a06;border-color:transparent}
+  .view{display:none;animation:fade .35s ease both}
+  .view.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .lead{font-family:'Fraunces',serif;font-style:italic;font-size:16px;line-height:1.5;color:#e7eef5;margin:14px 6px 20px}
+  .leg{position:relative;padding-left:58px;margin-bottom:18px}
+  .spine{position:absolute;left:22px;top:6px;bottom:-18px;width:2px;background:linear-gradient(180deg,var(--accent),rgba(0,0,0,.05))}
+  .leg:last-child .spine{display:none}
+  .node{position:absolute;left:6px;top:2px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;background:radial-gradient(circle at 35% 30%, var(--hero2), var(--hero1));border:2px solid var(--accent);color:var(--accent-lite);z-index:2}
+  .leg.done .node{background:linear-gradient(180deg,var(--accent-lite),var(--accent));color:#231a06;border-color:var(--accent-lite);box-shadow:0 0 0 4px rgba(0,0,0,.12)}
+  .here{position:absolute;left:-4px;top:40px;font-family:'Saira Condensed',sans-serif;font-size:10px;letter-spacing:.14em;color:#231a06;background:var(--accent-lite);padding:3px 7px;border-radius:6px;font-weight:700;white-space:nowrap;box-shadow:0 6px 14px rgba(0,0,0,.3);animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  .card{position:relative;background:var(--panel);color:var(--ink);border-radius:16px;padding:18px 18px 8px;box-shadow:var(--shadow)}
+  .card .fl{position:absolute;top:-11px;right:14px;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.1em;font-size:12px;color:#231a06;background:linear-gradient(180deg,var(--accent-lite),var(--accent));padding:4px 10px;border-radius:8px}
+  .card h3{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:22px;margin:2px 0 3px;color:var(--ink)}
+  .meta{font-family:'Saira Condensed',sans-serif;letter-spacing:.06em;font-size:12.5px;color:var(--accent-deep);text-transform:uppercase;margin-bottom:12px}
+  .meta em{color:var(--ink-soft);font-style:normal}
+  .item{display:flex;gap:12px;align-items:center;padding:11px 4px;border-top:1px solid #ece7d8;cursor:pointer}
+  .item:first-of-type{border-top:none}
+  .box{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid #c7bfa6;position:relative;transition:.15s}
+  .item.tick .box{background:linear-gradient(180deg,var(--accent2),var(--accent-deep));border-color:var(--accent-deep)}
+  .item.tick .box:after{content:"";position:absolute;left:7px;top:2px;width:6px;height:12px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(43deg)}
+  .item .txt{flex:1;font-size:15px;line-height:1.4;color:var(--ink)}
+  .item.tick .txt{color:#8a9299;text-decoration:line-through}
+  .item .note{display:block;font-size:12.5px;color:var(--accent-deep);margin-top:3px;font-weight:600;text-decoration:none}
+  .chev{flex:0 0 auto;color:var(--accent-deep);font-size:22px;font-weight:700;opacity:.75}
+  .scrip{margin:8px 0 12px;padding:13px 15px;border-left:3px solid var(--accent);background:rgba(0,0,0,.05);border-radius:0 12px 12px 0}
+  .scrip p{font-family:'Fraunces',serif;font-style:italic;font-size:15px;line-height:1.5;color:var(--scrip-ink);margin:0}
+  .scrip b{display:block;font-family:'Saira Condensed',sans-serif;font-style:normal;letter-spacing:.16em;font-size:11px;color:var(--accent-deep);margin-top:7px;text-transform:uppercase}
+  .say{margin-top:9px;background:none;border:1px solid var(--accent-deep);color:var(--accent-deep);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:'Saira Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+  .stamp{position:absolute;right:14px;bottom:14px;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.14em;font-size:13px;color:#b1442f;border:2.5px solid #b1442f;border-radius:9px;padding:4px 10px;transform:rotate(-11deg);opacity:0;transition:.3s}
+  .card.cleared .stamp{opacity:.85}
+  .ladder .item{border-top:none;background:var(--panel);border-radius:13px;margin-bottom:9px;padding:14px 15px;color:var(--ink);box-shadow:0 10px 24px rgba(3,12,22,.28)}
+  .ladder .rung-h{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:19px;color:var(--ink)}
+  .ladder .why{font-size:13px;color:var(--ink-soft);margin-top:2px;line-height:1.4}
+  .gate{font-family:'Saira Condensed',sans-serif;font-size:10px;letter-spacing:.12em;color:#231a06;background:var(--accent-lite);padding:2px 7px;border-radius:6px;margin-left:8px;vertical-align:middle}
+  .now{font-family:'Saira Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:#231a06;background:var(--accent-lite);display:inline-block;padding:4px 10px;border-radius:7px;margin:0 0 6px 2px;font-weight:700}
+  .res{background:var(--panel);color:var(--ink);border-radius:15px;padding:16px 17px;margin-bottom:13px;box-shadow:var(--shadow)}
+  .res h4{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:18px;margin:0 0 2px;color:var(--ink)}
+  .res .tagline{font-family:'Saira Condensed',sans-serif;letter-spacing:.06em;font-size:12px;color:var(--accent-deep);text-transform:uppercase;margin-bottom:8px}
+  .res p{font-size:14px;line-height:1.5;color:#324454;margin:0 0 10px}
+  .res .fact{font-size:13px;color:var(--ink-soft);margin:0 0 4px;padding-left:20px;position:relative}
+  .res .fact:before{content:"\2714";position:absolute;left:0;top:0;color:var(--accent-deep)}
+  .res a{display:inline-block;margin-top:8px;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:#231a06;text-decoration:none;background:linear-gradient(180deg,var(--accent-lite),var(--accent));padding:9px 16px;border-radius:9px}
+  .dream-head{background:linear-gradient(180deg,var(--hero2),var(--hero1));border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .dream-head:before{content:"\2605";position:absolute;top:-12px;right:8px;font-size:120px;color:rgba(255,255,255,.06);line-height:1}
+  .dream-head h3{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:26px;margin:0 0 6px;color:var(--accent-lite)}
+  .dream-head p{font-size:14.5px;line-height:1.55;color:#dce8f2;margin:0}
+  .dstep{position:relative;background:var(--panel);color:var(--ink);border-radius:14px;padding:15px 16px 15px 54px;margin-bottom:11px;box-shadow:0 12px 26px rgba(3,12,22,.3)}
+  .dstep.tapp{cursor:pointer}
+  .dstep .num{position:absolute;left:14px;top:14px;width:28px;height:28px;border-radius:50%;font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;color:#231a06;background:linear-gradient(180deg,var(--accent-lite),var(--accent))}
+  .dstep h5{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:17px;margin:0 0 3px;color:var(--ink)}
+  .dstep p{font-size:13.5px;line-height:1.5;color:#324454;margin:0}
+  .dtag{display:inline-block;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:10.5px;padding:3px 9px;border-radius:6px;margin-bottom:7px}
+  .t-amp{background:rgba(62,124,116,.18);color:#2c6a60}
+  .t-tr{background:rgba(232,164,76,.2);color:#9a6414}
+  .t-risk{background:rgba(177,68,47,.16);color:#a5402c}
+  .dchev{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--accent-deep);font-size:22px;font-weight:700;opacity:.7}
+  .pgate,.ppanel{background:var(--panel);color:var(--ink);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+  .pgate h3,.ppanel h3{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:var(--ink)}
+  .pgate p{font-size:14px;color:#324454;line-height:1.5}
+  .pin-in{width:130px;text-align:center;letter-spacing:.5em;font-size:20px;padding:12px;border-radius:11px;border:2px solid #c7bfa6;font-family:'Saira Condensed',sans-serif}
+  .pin-in:focus{outline:none;border-color:var(--accent)}
+  .pbtn{margin-left:8px;padding:12px 20px;border-radius:11px;color:#231a06;background:linear-gradient(180deg,var(--accent-lite),var(--accent));font-size:14px}
+  .prow{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #ece7d8;font-size:14px;color:var(--ink)}
+  .prow label{font-family:'Saira Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);flex:1}
+  .prow input{width:96px;padding:9px;border-radius:9px;border:2px solid #c7bfa6;font-size:15px;text-align:center;font-family:inherit}
+  .reset{margin-top:14px;background:none;border:1px solid #b1442f;color:#b1442f;border-radius:10px;padding:10px 16px;font-size:12px;cursor:pointer;font-family:'Saira Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+  .hide{display:none!important}
+  .footer{text-align:center;margin-top:26px;font-family:'Saira Condensed',sans-serif;letter-spacing:.2em;font-size:11px;color:#6f89a1;text-transform:uppercase}
+  .brief-screen{position:fixed;inset:0;z-index:70;background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 100%);transform:translateX(100%);transition:transform .32s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+  .brief-screen.open{transform:none}
+  .brief-bar{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:16px 16px 10px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.25)}
+  .back{background:rgba(255,255,255,.08);border:1px solid var(--line);color:#eaf0f6;border-radius:10px;padding:9px 14px;font-family:'Saira Condensed',sans-serif;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:13px;cursor:pointer}
+  .brief-fl{margin-left:auto;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.1em;font-size:12px;color:#231a06;background:linear-gradient(180deg,var(--accent-lite),var(--accent));padding:5px 11px;border-radius:8px}
+  .brief-body{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 18px 28px;max-width:760px;width:100%;margin:0 auto}
+  .brief-eyebrow{font-family:'Saira Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--accent-lite)}
+  .brief-title{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:clamp(26px,7vw,36px);line-height:1.02;margin:6px 0 4px;color:#fff}
+  .brief-meta{font-family:'Saira Condensed',sans-serif;letter-spacing:.06em;font-size:12.5px;color:var(--accent2);text-transform:uppercase;margin-bottom:16px}
+  .blk{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:13px}
+  .blk-h{font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--accent-lite);margin:0 0 9px;display:flex;align-items:center;gap:7px}
+  .blk p{margin:0;font-size:15px;line-height:1.55;color:#e6eef6}
+  .blk ol{margin:0;padding-left:20px}
+  .blk ol li{font-size:14.5px;line-height:1.5;color:#e6eef6;margin-bottom:7px}
+  .factline{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:#dce6f0;margin-bottom:7px;line-height:1.45}
+  .factline:last-child{margin-bottom:0}
+  .factline b{color:var(--accent-lite);flex:0 0 auto}
+  .costrow{margin-bottom:11px}
+  .costrow:last-child{margin-bottom:0}
+  .costrow .cl{display:flex;justify-content:space-between;font-size:14px;color:#e6eef6;margin-bottom:4px}
+  .costrow .cl b{color:var(--accent-lite);font-family:'Saira Condensed',sans-serif}
+  .costbar{height:9px;border-radius:6px;background:rgba(0,0,0,.3);overflow:hidden}
+  .costbar > i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
+  .cost-note{font-size:12.5px;color:#a9c2d6;margin-top:8px;line-height:1.45}
+  .q{margin-bottom:15px}
+  .q:last-child{margin-bottom:0}
+  .q .qq{font-size:15px;font-weight:600;color:#fff;margin-bottom:9px;line-height:1.4}
+  .opt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#e6eef6;border-radius:10px;padding:11px 13px;margin-bottom:7px;font-size:14.5px;cursor:pointer;font-family:inherit;transition:.15s}
+  .opt.correct{background:rgba(62,124,116,.35);border-color:var(--accent2);color:#fff}
+  .opt.wrong{background:rgba(177,68,47,.28);border-color:#c96a56}
+  .opt:disabled{cursor:default}
+  .qex{font-size:13px;color:#bcd2e5;margin-top:7px;line-height:1.45;display:none}
+  .qex.show{display:block}
+  .map{width:100%;height:220px;border:1px solid var(--line);border-radius:12px;background:#0a1626}
+  .maplink{display:inline-block;margin-top:10px;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:#231a06;text-decoration:none;background:linear-gradient(180deg,var(--accent-lite),var(--accent));padding:9px 15px;border-radius:9px}
+  .lnk{display:inline-block;margin:0 8px 8px 0;font-family:'Saira Condensed',sans-serif;font-weight:600;letter-spacing:.05em;font-size:14px;color:#eaf0f6;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:10px 14px;border-radius:10px}
+  .lnk:after{content:" \2197";color:var(--accent-lite)}
+  .moment{text-align:center;padding:26px 18px;border-radius:16px;margin-bottom:14px;background:radial-gradient(600px 260px at 50% 0%, var(--cover-glow), transparent 70%),linear-gradient(180deg,var(--hero2),var(--hero1));border:1px solid var(--accent)}
+  .moment .mi{font-size:46px;line-height:1;color:var(--accent-lite)}
+  .moment h4{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:24px;color:#fff;margin:10px 0 6px}
+  .moment p{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:#f2e3ca;margin:0;line-height:1.5}
+  .brief-scrip{background:rgba(0,0,0,.22);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:14px 15px;margin-bottom:13px}
+  .brief-scrip p{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:#eef2ee;margin:0;line-height:1.5}
+  .brief-scrip b{display:block;font-family:'Saira Condensed',sans-serif;font-style:normal;letter-spacing:.14em;font-size:11px;color:var(--accent-lite);margin-top:7px;text-transform:uppercase}
+  .brief-foot{flex:0 0 auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:rgba(0,0,0,.3)}
+  .complete-btn{width:100%;max-width:730px;margin:0 auto;display:block;padding:15px;border-radius:13px;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:15px;cursor:pointer;border:none}
+  .complete-btn.todo{color:#231a06;background:linear-gradient(180deg,var(--accent-lite),var(--accent))}
+  .complete-btn.did{color:#eaf0f6;background:rgba(62,124,116,.3);border:1px solid var(--accent2)}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(30px);z-index:80;background:linear-gradient(180deg,var(--accent-lite),var(--accent));color:#231a06;font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.06em;padding:12px 20px;border-radius:12px;box-shadow:0 14px 30px rgba(0,0,0,.4);opacity:0;transition:.35s;font-size:14px;max-width:88%;text-align:center}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  #cfx{position:fixed;inset:0;pointer-events:none;z-index:75}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars" aria-hidden="true"></div>
+<section id="cover">
+  <div class="cover-in">
+    <div class="wings">&#128187;</div>
+    <div class="cover-eyebrow">The builder’s path</div>
+    <h1>BUILD<br><span>& OWN IT</span></h1>
+    <p class="cover-sub">From freshman year to founder &mdash; master IT in the age of AI, ship real solutions, and become an employer of labor.</p>
+    <div class="verse">&ldquo;Seest thou a man diligent in his business? he shall stand before kings.&rdquo;<b>Proverbs 22:29</b></div>
+    <div class="field">
+      <label for="nm">Future founder, what is your name?</label>
+      <input id="nm" type="text" placeholder="Enter your name" autocomplete="off" />
+      <label for="ar">Name your future company (you can change this later)</label>
+      <input id="ar" type="text" placeholder="e.g., Testimony Labs" autocomplete="off" />
+    </div>
+    <button class="btn btn-go" id="begin">Start building</button>
+  </div>
+</section>
+
+<div class="wrap" id="app" style="display:none">
+  <div class="hero">
+    <div class="cloud c1"></div><div class="cloud c2"></div>
+    <div class="hero-top"><span class="hero-wings">&#128187;</span><span class="tail" id="tail">&mdash;</span><button class="edit" id="editBtn">Edit</button></div>
+    <h2><small>Future Founder</small><span id="heroName">&nbsp;</span></h2>
+    <div class="hero-air" id="heroAir"></div>
+    <div class="gauge"><div class="gauge-top"><span>Journey progress</span><b id="pct">0%</b></div><div class="bar"><i id="barFill"></i></div></div>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-v="path">The Path</button>
+    <button class="tab" data-v="ladder">Build Ladder</button>
+    <button class="tab" data-v="launch">Launchpad</button>
+    <button class="tab" data-v="cards">Specialize</button>
+    <button class="tab" data-v="parent">Parent</button>
+  </div>
+  <div class="view on" id="v-path"><p class="lead">Your four years, then beyond. Tap a step for its briefing &mdash; what to do, what to build, what matters now. Tick the box when it is done.</p><div id="legs"></div></div>
+  <div class="view" id="v-ladder"><p class="lead">Learn by shipping. Each rung is a real thing to build &mdash; your portfolio, one project at a time. (These will be tailored to your syllabus once it arrives.)</p><div class="ladder" id="rungs"></div>
+    <div class="scrip" style="margin-top:16px"><p>&ldquo;For who hath despised the day of small things?&rdquo;</p><b>Zechariah 4:10</b></div></div>
+  <div class="view" id="v-launch"><p class="lead">You are already a freshman &mdash; so the first move is today, right here in Columbus.</p><div id="resList"></div></div>
+  <div class="view" id="v-cards">
+    <div class="dream-head"><h3>Specialize — through the AI lens</h3><p>Where to major within IT, seen through what AI is amplifying vs. automating. Tap any track to go deeper.</p></div>
+    <div id="cardList"></div>
+    <div class="scrip" style="margin-top:6px"><p>&ldquo;Seest thou a man diligent in his business? he shall stand before kings.&rdquo;</p><b>Proverbs 22:29</b></div>
+  </div>
+  <div class="view" id="v-parent">
+    <div class="pgate" id="pgate"><h3>Parent access</h3><p>Enter the family PIN to set the stage and manage the plan.</p>
+      <div style="margin-top:12px"><input class="pin-in" id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="&bull;&bull;&bull;&bull;" /><button class="btn pbtn" id="pinBtn">Enter</button></div></div>
+    <div class="ppanel hide" id="ppanel"><h3>Controls</h3>
+      <div class="prow"><label for="ageSet">Current stage (1&ndash;6)</label><input id="ageSet" type="number" min="1" max="6" /></div>
+      <div class="prow" style="border-top:none;color:#324454;font-size:13px;line-height:1.5">Stage 1 = freshman year. Move the stage as Testimony advances through college and beyond.</div>
+      <div class="prow"><label>Steps completed</label><b id="pDone">0</b></div>
+      <div class="prow"><label>Build rungs climbed</label><b id="pMath">0</b></div>
+      <button class="reset" id="resetBtn">Reset all progress</button></div>
+  </div>
+  <div class="footer">Glory to God alone &middot; Testimony’s Path</div>
+</div>
+
+<div class="brief-screen" id="brief" aria-hidden="true">
+  <div class="brief-bar"><button class="back" id="backBtn">&larr; Back</button><span class="brief-fl" id="briefFl"></span></div>
+  <div class="brief-body" id="briefBody"></div>
+  <div class="brief-foot"><button class="complete-btn todo" id="completeBtn">Mark complete</button></div>
+</div>
+<div id="toast"></div>
+<canvas id="cfx"></canvas>
+<script>
+function lsGet(k){try{return window.localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{window.localStorage.setItem(k,v);}catch(e){}}
+var SKEY='it';
+var K={name:'wop_'+SKEY+'_name',air:'wop_'+SKEY+'_air',age:'wop_'+SKEY+'_age',done:'wop_'+SKEY+'_done',math:'wop_'+SKEY+'_math'};
+var BADGE_PRE='',BADGE_SUF='.dev',BADGE_LOWER=true;
+var state={name:'',air:'',age:1,done:{},math:{}};
+function loadState(){state.name=lsGet(K.name)||'';state.air=lsGet(K.air)||'';var a=parseInt(lsGet(K.age),10);state.age=(a>0?a:1);
+  try{state.done=JSON.parse(lsGet(K.done)||'{}');}catch(e){state.done={};}
+  try{state.math=JSON.parse(lsGet(K.math)||'{}');}catch(e){state.math={};}}
+function saveDone(){lsSet(K.done,JSON.stringify(state.done));}
+function saveMath(){lsSet(K.math,JSON.stringify(state.math));}
+
+
+var HERE_LABEL='&#9654; YOU ARE HERE';
+var CLEAR_WORD='Shipped';
+var SUBJECT_WORD='the craft of building';
+var LADDER_TAG='BUILD';
+var ICON='&#128187;';
+var CONFETTI=['#35D0C0','#8B7CF6','#E4C877','#5CA399','#F5F7FA'];
+var PHASES=[
+ {id:'s1',icon:'&#128187;',fl:'YEAR 1',name:'Freshman \u2014 Foundations',ageStart:1,ageLbl:'Freshman year',grade:'Learn to build',
+  scrip:{t:'For who hath despised the day of small things?',r:'Zechariah 4:10'},
+  items:[{id:'a1',t:'Learn one language deeply (Python is a great start).'},{id:'a2',t:'Master the CS fundamentals your syllabus covers.'},{id:'a3',t:'Set up GitHub and ship your first small project.',n:'Build in public from day one.'},{id:'a4',t:'Start using AI as a learning force-multiplier, not a crutch.'}]},
+ {id:'s2',icon:'&#129517;',fl:'YEAR 2',name:'Sophomore \u2014 Specialize',ageStart:2,ageLbl:'Sophomore year',grade:'Pick a track & go deep',
+  scrip:{t:'Seest thou a man diligent in his business? he shall stand before kings.',r:'Proverbs 22:29'},
+  items:[{id:'b1',t:'Choose a specialization (see the Specialize tab).'},{id:'b2',t:'Build 2&ndash;3 real projects that solve real problems.'},{id:'b3',t:'Learn Git, the cloud, and how to deploy.'},{id:'b4',t:'Land your first internship or paid freelance gig.'}]},
+ {id:'s3',icon:'&#127970;',fl:'YEAR 3',name:'Junior \u2014 Prove It',ageStart:3,ageLbl:'Junior year',grade:'Real-world experience',
+  scrip:{t:'And whatsoever ye do, do it heartily, as to the Lord.',r:'Colossians 3:23'},
+  items:[{id:'c1',t:'Intern at a real company (or run paid freelance work).'},{id:'c2',t:'Contribute to an open-source project.'},{id:'c3',t:'Build a portfolio site that shows your work.'},{id:'c4',t:'Go deeper in your specialty than your classmates.'}]},
+ {id:'s4',icon:'&#128640;',fl:'YEAR 4',name:'Senior \u2014 Launch',ageStart:4,ageLbl:'Senior year',grade:'Job or first clients',
+  scrip:{t:'This book of the law shall not depart out of thy mouth... that thou mayest have good success.',r:'Joshua 1:8'},
+  items:[{id:'d1',t:'Ship a strong capstone project.'},{id:'d2',t:'Polish your portfolio and GitHub.'},{id:'d3',t:'Interview well &mdash; and line up a job or clients.'}]},
+ {id:'s5',icon:'&#128188;',fl:'STAGE 5',name:'Early Career',ageStart:5,ageLbl:'First jobs',grade:'Master & save',
+  scrip:{t:'He that is faithful in that which is least is faithful also in much.',r:'Luke 16:10'},
+  items:[{id:'e1',t:'Master your craft and the AI tools of your field.'},{id:'e2',t:'Save capital and keep shipping side projects.'},{id:'e3',t:'Grow your network and reputation.'}]},
+ {id:'s6',icon:'&#11088;',fl:'SUMMIT',name:'Employer of Labor',ageStart:6,ageLbl:'The vision',grade:'Founder',
+  scrip:{t:'For it is he that giveth thee power to get wealth.',r:'Deuteronomy 8:18'},
+  items:[{id:'f1',t:'Freelance \u2192 productized service \u2192 agency or SaaS.'},{id:'f2',t:'Build a product with real, paying users.'},{id:'f3',t:'Hire a team &mdash; become an employer of labor.'}]}
+];
+var BRIEFS={
+ a1:{why:'Depth beats dabbling. Learning one language well &mdash; how it really works &mdash; teaches you to think like a builder, and every other language comes faster.',
+   how:['Pick one language (Python is beginner-friendly and powerful).','Build small things constantly.','Read other people\u2019s code on GitHub.'],
+   links:[['freeCodeCamp','https://www.freecodecamp.org'],['CS50 (Harvard, free)','https://cs50.harvard.edu/x/']]},
+ a2:{why:'Your degree gives you the fundamentals &mdash; data structures, algorithms, how computers work. These never go out of date, even as tools change.',
+   links:[['The Odin Project','https://www.theodinproject.com'],['roadmap.sh','https://roadmap.sh']]},
+ a3:{why:'A GitHub profile is the new resume. In today\u2019s market, your portfolio of shipped projects matters more than your GPA. Start building it in your first weeks.',
+   facts:[['Truth','Recruiters check your GitHub before your transcript'],['Habit','Ship something small every month']],
+   how:['Create a GitHub account.','Deploy a simple site with GitHub Pages.','Commit often &mdash; show the work.']},
+ a4:{why:'AI is the biggest shift in tech since the internet. The winners are not those who avoid it, nor those who lean on it blindly &mdash; but those who build WITH it and understand what it produces.',
+   facts:[['Data point','AI-skilled workers earn about 56% more on average'],['Rule','Use AI to go faster, but always understand the code']]},
+ b1:{why:'By sophomore year, pick a direction. Generalists are being squeezed by AI; specialists who go deep in a high-demand track have the most stable, best-paid careers.'},
+ b2:{why:'Real projects &mdash; things people actually use &mdash; teach more than any lecture, and they become your portfolio. This is your "build after each topic" engine.',
+   links:[['Project ideas','https://roadmap.sh/projects']]},
+ b3:{why:'Employers assume you can use Git and deploy to the cloud. Learn these early and you are instantly more hireable than classmates who only code locally.'},
+ b4:{why:'The first internship or paid gig is the hardest to get and the most valuable. It turns a student into a professional and often leads to a full-time offer.'},
+ c1:{why:'A junior-year internship is the strongest predictor of a good first job. Central Ohio is full of them &mdash; JPMorgan Chase, Nationwide, Cardinal Health, and more.',
+   facts:[['Columbus employers','JPMorgan Chase, Nationwide, Cardinal Health, Huntington, Battelle']]},
+ c2:{why:'Contributing to open source proves you can work in a real codebase with a real team &mdash; a signal employers love.'},
+ c3:{why:'A clean portfolio site that shows 3&ndash;5 real projects, with links and short write-ups, does more than a resume ever could.'},
+ c4:{why:'Depth is your edge. Knowing one specialty better than anyone in your class is what turns interviews into offers.'},
+ d1:{moment:{i:'&#128640;',h:'Capstone shipped',p:'A real project, start to finish, with your name on it.'},why:'Your senior capstone is the flagship of your portfolio &mdash; the proof you can carry a project from idea to launch.'},
+ d2:{why:'Before you interview, make sure your portfolio and GitHub tell a clear story: here is what I build, and here is how well I build it.'},
+ d3:{why:'Interviewing is its own skill &mdash; practice coding problems, know how to explain your projects, and apply widely. Or, if you are ready, sign your first clients.',
+   links:[['Interview prep','https://roadmap.sh']]},
+ e1:{why:'Your first job is a paid apprenticeship. Master your craft, learn the AI tools of your field deeply, and become the person others rely on.'},
+ e2:{why:'To become an employer of labor you need capital and freedom. Live below your means, save, and keep building side projects that could become a business.'},
+ e3:{why:'Your network is your net worth. Serve people, share your work, and build the relationships that will one day become clients, partners, and hires.'},
+ f1:{moment:{i:'&#11088;',h:'Employer of Labor',p:'From builder to founder &mdash; you create the jobs now.'},why:'The classic path: freelance to prove demand, package it into a productized service, then grow into an agency or a SaaS product.',
+   how:['Freelance to find a real, paying problem.','Turn it into a repeatable, productized service.','Systematize it into an agency or software product.']},
+ f2:{why:'A product with paying users is an asset that works while you sleep. This is where wealth and impact compound.'},
+ f3:{why:'The summit is not just success &mdash; it is creating work for others. A Kingdom business that employs and trains people multiplies the blessing.',
+   scrip:{t:'But thou shalt remember the LORD thy God: for it is he that giveth thee power to get wealth.',r:'Deuteronomy 8:18'}}
+};
+var LADDER=[
+ {id:'m1',h:'Your first program',w:'A script that solves a real chore.',brief:{why:'Automate something small and annoying in your life. Shipping something real, however tiny, changes how you see yourself.',links:[['freeCodeCamp','https://www.freecodecamp.org']]}},
+ {id:'m2',h:'A portfolio website',gate:'Ship it',w:'Single-file, deployed to GitHub Pages.',brief:{why:'A personal site teaches HTML, CSS, and deployment &mdash; and gives you a home on the web to show your work.',links:[['GitHub Pages','https://pages.github.com']]}},
+ {id:'m3',h:'A CRUD app',w:'Create, read, update, delete data.',brief:{why:'A todo or inventory app teaches the core pattern behind almost every business application.'}},
+ {id:'m4',h:'An API-powered app',w:'Pull live data from the web.',brief:{why:'Calling an API teaches how modern apps talk to each other and pull in real, live data.'}},
+ {id:'m5',h:'An AI-powered app',w:'Call an AI model to do real work.',brief:{why:'Wiring an AI API into an app is the most valuable skill of this era &mdash; and exactly how modern solutions are built.',links:[['Anthropic API docs','https://docs.claude.com']]}},
+ {id:'m6',h:'A deployed project with users',w:'Something real people actually use.',brief:{why:'Getting even a few real users teaches deployment, feedback, and the difference between a demo and a product.'}},
+ {id:'m7',h:'A paid product or client project',w:'Someone pays for what you built.',brief:{why:'The first dollar earned from your code is the seed of becoming an employer of labor.'}}
+];
+var LAUNCH=[
+ {now:'Start now',h:'Ship on GitHub \u2014 today',tag:'Do this now',p:'Create a GitHub account and deploy your first page with GitHub Pages. In today\u2019s market your portfolio matters more than your GPA, so start it now.',facts:['Free hosting for your projects','Your GitHub is the new resume'],href:'https://pages.github.com',cta:'Start on GitHub'},
+ {h:'Central Ohio\u2019s tech corridor',tag:'Where the jobs are',p:'Columbus is a booming tech hub: JPMorgan Chase (the area\u2019s largest employer), Nationwide, Cardinal Health, Huntington, Battelle, plus Google, Meta and AWS data centers.',facts:['Major internship pipelines','A real tech scene at home'],href:'https://www.columbusregion.com/why-columbus/industries/technology/',cta:'See the region'},
+ {h:'Intel\u2019s "Silicon Heartland"',tag:'Your timeline',p:'Intel is building a $28B semiconductor mega-site in New Albany. Delayed to around 2030&ndash;2032 &mdash; which lines up almost exactly with when Testimony finishes college.',facts:['Hardware, chips & advanced manufacturing','Columbus State runs a fast semiconductor program'],href:'https://siliconheartland.newalbanyohio.org/',cta:'Explore Silicon Heartland'},
+ {h:'Learn for free \u2014 the best of the web',tag:'Free forever',p:'freeCodeCamp, The Odin Project, Harvard\u2019s CS50, and roadmap.sh can teach you almost anything in IT at no cost. Pair them with your degree.',facts:['Structured, project-based paths','Used by working developers'],href:'https://www.theodinproject.com',cta:'Pick a path'},
+ {h:'Rev1 Ventures & the founder path',tag:'For the vision',p:'Columbus has a real startup scene. Rev1 Ventures is a leading local accelerator &mdash; useful when Testimony is ready to become an employer of labor.',facts:['Startup mentorship & capital','Right in Columbus'],href:'https://www.rev1ventures.com',cta:'See Rev1'},
+ {h:'NSBE & ColorStack \u2014 your people',tag:'Community',p:'The National Society of Black Engineers and ColorStack support Black technologists with mentorship, internships, and a national network.',facts:['Mentorship & scholarships','Internship pipelines'],href:'https://www.colorstack.org',cta:'Join the community'}
+];
+var CARDS=[
+ {h:'AI / Machine Learning Engineer',tag:'AI-Amplified',tagc:'t-amp',p:'Build the models that power AI. Deepest demand, highest pay &mdash; but math-heavy.',brief:{why:'AI/ML engineers create and train the models behind modern AI. It requires strong math and statistics, and demand has surged. If Testimony loves math, this is the frontier.',facts:[['Outlook','Fastest-growing, highest-paid IT track'],['Needs','Strong math, statistics, and Python']]}},
+ {h:'Data Engineering / Data Science',tag:'AI-Amplified',tagc:'t-amp',p:'AI runs on data. Someone has to pipe it, clean it, and make it usable. Very durable.',brief:{why:'Every AI system is only as good as its data. Data engineers build the pipelines; data scientists find the insights. As AI grows, so does the need for people who wrangle data.'}},
+ {h:'Cybersecurity',tag:'AI-Amplified',tagc:'t-amp',p:'More AI and more systems mean more attacks to defend. Security talent is in chronic short supply.',brief:{why:'As the world digitizes, protecting it becomes critical. Cybersecurity has a persistent talent shortage, strong pay, and mission that matters.'}},
+ {h:'Cloud / DevOps / Platform',tag:'AI-Amplified',tagc:'t-amp',p:'Everything runs in the cloud. The people who deploy and scale it are always in demand.',brief:{why:'Cloud and DevOps engineers build the infrastructure everything else runs on. AWS/Azure/GCP skills are among the most reliably employable in tech.'}},
+ {h:'AI Solutions / Integration',tag:'AI-Amplified',tagc:'t-amp',p:'Wire AI into real businesses. This is exactly what your mentor\u2019s Cornerstone Studio does.',brief:{why:'You do not have to build models to profit from AI &mdash; you can integrate existing AI into real business tools. This applied path is booming and is the fastest route to becoming an employer of labor.'}},
+ {h:'Software Engineering (full-stack)',tag:'Transforming',tagc:'t-tr',p:'Still strong and everywhere &mdash; but you must build WITH AI. Routine coding is commoditizing.',brief:{why:'Software engineering remains a huge field, but AI now writes routine code. The winners are engineers who use AI to build faster and focus on design, systems, and judgment.'}},
+ {h:'IT Support / Help Desk (L1/L2)',tag:'At-Risk',tagc:'t-risk',p:'Basic support is being automated by AI chatbots. Fine as a first step \u2014 but plan to move up-stack.',brief:{why:'Level 1 and 2 support tasks &mdash; password resets, common tickets &mdash; are increasingly handled by AI. It can be a foot in the door, but Testimony should plan to climb into engineering or security.'}},
+ {h:'Manual QA Testing',tag:'At-Risk',tagc:'t-risk',p:'AI testing tools now generate and run tests faster than humans. Shift toward automation engineering.',brief:{why:'Routine manual testing is being automated. The future is in test automation and quality engineering &mdash; building the systems that test software, not clicking through it by hand.'}}
+];
+
+
+function el(id){return document.getElementById(id);}
+function totalItems(){var n=0;for(var i=0;i<PHASES.length;i++){n+=PHASES[i].items.length;}return n;}
+function doneCount(){var n=0;for(var k in state.done){if(state.done[k]){n++;}}return n;}
+function mathCount(){var n=0;for(var k in state.math){if(state.math[k]){n++;}}return n;}
+function currentPhaseIndex(){var idx=state.age-1;if(idx<0){idx=0;}if(idx>PHASES.length-1){idx=PHASES.length-1;}return idx;}
+function initials(){var s=(state.name||'').toUpperCase().replace(/[^A-Z ]/g,'').split(' ');var r='';for(var i=0;i<s.length&&r.length<2;i++){if(s[i]){r+=s[i].charAt(0);}}return r||'XX';}
+function badge(){var ini=initials();if(BADGE_LOWER){ini=ini.toLowerCase();}return BADGE_PRE+ini+BADGE_SUF;}
+function findItem(id){for(var i=0;i<PHASES.length;i++){for(var j=0;j<PHASES[i].items.length;j++){if(PHASES[i].items[j].id===id){return {ph:PHASES[i],it:PHASES[i].items[j]};}}}return null;}
+
+function renderHero(){el('heroName').innerHTML=state.name?state.name:'&nbsp;';el('tail').innerHTML=badge();
+  el('heroAir').innerHTML=state.air?('Future home of &ldquo;'+state.air+'&rdquo;'):'Name it in the Parent tab';
+  var pct=Math.round((doneCount()/totalItems())*100);el('pct').innerHTML=pct+'%';el('barFill').style.width=pct+'%';}
+function renderPath(){var box=el('legs');box.innerHTML='';var cur=currentPhaseIndex();
+  for(var i=0;i<PHASES.length;i++){var ph=PHASES[i];var allDone=true;
+    for(var j=0;j<ph.items.length;j++){if(!state.done[ph.items[j].id]){allDone=false;break;}}
+    var leg=document.createElement('div');leg.className='leg'+(allDone?' done':'');
+    var here=(i===cur)?'<span class="here">'+HERE_LABEL+'</span>':'';var itemsHtml='';
+    for(var k=0;k<ph.items.length;k++){var it=ph.items[k];var on=state.done[it.id]?' tick':'';
+      itemsHtml+='<div class="item'+on+'" data-id="'+it.id+'"><span class="box" data-box="1"></span><span class="txt">'+it.t+(it.n?'<span class="note">'+it.n+'</span>':'')+'</span><span class="chev">&#8250;</span></div>';}
+    leg.innerHTML='<div class="spine"></div><div class="node">'+ph.icon+'</div>'+here+
+      '<div class="card'+(allDone?' cleared':'')+'"><span class="fl">'+ph.fl+'</span><h3>'+ph.name+'</h3>'+
+      '<div class="meta">'+ph.ageLbl+' &middot; <em>'+ph.grade+'</em></div>'+itemsHtml+
+      '<div class="scrip"><p>&ldquo;'+ph.scrip.t+'&rdquo;</p><b>'+ph.scrip.r+'</b><button class="say" data-say="'+encodeURIComponent(ph.scrip.t)+'">&#9654; Read aloud</button></div>'+
+      '<span class="stamp">'+CLEAR_WORD+'</span></div>';
+    box.appendChild(leg);}
+  bindItems();bindSay();}
+function renderLadder(){var box=el('rungs');box.innerHTML='';
+  for(var i=0;i<LADDER.length;i++){var m=LADDER[i];var on=state.math[m.id]?' tick':'';
+    var d=document.createElement('div');d.className='item'+on;d.setAttribute('data-math',m.id);
+    d.innerHTML='<span class="box" data-box="1"></span><span class="txt"><span class="rung-h">'+m.h+(m.gate?'<span class="gate">'+m.gate+'</span>':'')+'</span><span class="why">'+m.w+'</span></span><span class="chev">&#8250;</span>';
+    box.appendChild(d);}bindLadder();}
+function renderLaunch(){var box=el('resList');box.innerHTML='';
+  for(var i=0;i<LAUNCH.length;i++){var r=LAUNCH[i];var f='';for(var j=0;j<r.facts.length;j++){f+='<p class="fact">'+r.facts[j]+'</p>';}
+    var d=document.createElement('div');d.className='res';
+    d.innerHTML=(r.now?'<span class="now">'+r.now+'</span>':'')+'<h4>'+r.h+'</h4><div class="tagline">'+r.tag+'</div><p>'+r.p+'</p>'+f+'<a href="'+r.href+'" target="_blank" rel="noopener">'+r.cta+' &rarr;</a>';
+    box.appendChild(d);}}
+function renderCards(){var box=el('cardList');box.innerHTML='';
+  for(var i=0;i<CARDS.length;i++){var s=CARDS[i];var tag=s.tag?'<span class="dtag '+s.tagc+'">'+s.tag+'</span>':'';
+    var tapp=s.brief?' tapp':'';var chev=s.brief?'<span class="dchev">&#8250;</span>':'';
+    var d=document.createElement('div');d.className='dstep'+tapp;if(s.brief){d.setAttribute('data-card',i);}
+    d.innerHTML='<span class="num">'+(i+1)+'</span>'+tag+'<h5>'+s.h+'</h5><p>'+s.p+'</p>'+chev;box.appendChild(d);}
+  bindCards();}
+function renderParentStats(){el('pDone').innerHTML=doneCount()+' / '+totalItems();el('pMath').innerHTML=mathCount()+' / '+LADDER.length;el('ageSet').value=state.age;}
+
+function buildBlocks(b){var h='';
+  if(b.moment){h+='<div class="moment"><div class="mi">'+b.moment.i+'</div><h4>'+b.moment.h+'</h4><p>'+b.moment.p+'</p></div>';}
+  if(b.why){h+='<div class="blk"><p class="blk-h">'+ICON+' Why it matters</p><p>'+b.why+'</p></div>';}
+  if(b.facts){var fh='';for(var i=0;i<b.facts.length;i++){fh+='<div class="factline"><b>'+b.facts[i][0]+':</b><span>'+b.facts[i][1]+'</span></div>';}h+='<div class="blk"><p class="blk-h">&#9873; Key facts</p>'+fh+'</div>';}
+  if(b.how){var oh='';for(var i2=0;i2<b.how.length;i2++){oh+='<li>'+b.how[i2]+'</li>';}h+='<div class="blk"><p class="blk-h">&#10141; How to do it</p><ol>'+oh+'</ol></div>';}
+  if(b.ask){var ah='';for(var i3=0;i3<b.ask.length;i3++){ah+='<li>'+b.ask[i3]+'</li>';}h+='<div class="blk"><p class="blk-h">&#128172; Good questions to ask</p><ol>'+ah+'</ol></div>';}
+  if(b.cost){h+=buildCost(b.cost);}
+  if(b.quiz){h+=buildQuiz(b.quiz);}
+  if(b.map){h+=buildMap(b.map);}
+  if(b.links){var lh='';for(var i4=0;i4<b.links.length;i4++){lh+='<a class="lnk" href="'+b.links[i4][1]+'" target="_blank" rel="noopener">'+b.links[i4][0]+'</a>';}h+='<div class="blk"><p class="blk-h">&#128279; Go further</p>'+lh+'</div>';}
+  if(b.scrip){h+='<div class="brief-scrip"><p>&ldquo;'+b.scrip.t+'&rdquo;</p><b>'+b.scrip.r+'</b></div>';}
+  return h;}
+function buildCost(c){var max=0,i;for(i=0;i<c.rows.length;i++){if(c.rows[i][2]>max){max=c.rows[i][2];}}
+  var rows='';for(i=0;i<c.rows.length;i++){var lo=c.rows[i][1],hi=c.rows[i][2];var w=max?Math.round((hi/max)*100):0;
+    var amt=(lo>0?'$'+fmt(lo)+'&ndash;$'+fmt(hi):'up to $'+fmt(hi));
+    rows+='<div class="costrow"><div class="cl"><span>'+c.rows[i][0]+'</span><b>'+amt+'</b></div><div class="costbar"><i style="width:'+w+'%"></i></div></div>';}
+  var note=c.note?'<p class="cost-note">'+c.note+'</p>':'';var intro=c.intro?'<p style="font-size:14px;color:#dce6f0;margin:0 0 12px;line-height:1.5">'+c.intro+'</p>':'';
+  return '<div class="blk"><p class="blk-h">&#128176; The numbers</p>'+intro+rows+note+'</div>';}
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function buildQuiz(qs){var h='<div class="blk"><p class="blk-h">&#127919; Quick quiz</p>';
+  for(var i=0;i<qs.length;i++){var q=qs[i];var opts='';for(var j=0;j<q.opts.length;j++){opts+='<button class="opt" data-q="'+i+'" data-o="'+j+'" data-a="'+q.a+'">'+q.opts[j]+'</button>';}
+    h+='<div class="q"><div class="qq">'+q.q+'</div>'+opts+'<div class="qex" data-ex="'+i+'">'+q.ex+'</div></div>';}
+  return h+'</div>';}
+function buildMap(m){var b0=(m.lng-0.012),b1=(m.lat-0.008),b2=(m.lng+0.012),b3=(m.lat+0.008);
+  var src='https://www.openstreetmap.org/export/embed.html?bbox='+b0+','+b1+','+b2+','+b3+'&layer=mapnik&marker='+m.lat+','+m.lng;
+  var g='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(m.addr);
+  return '<div class="blk"><p class="blk-h">&#128205; Where it is</p><iframe class="map" loading="lazy" src="'+src+'"></iframe><p style="font-size:13px;color:#bcd2e5;margin:9px 0 0">'+m.addr+'</p><a class="maplink" href="'+g+'" target="_blank" rel="noopener">Open in Google Maps</a></div>';}
+
+var BRIEF_OPEN=null,BRIEF_KIND=null,PUSHED=false;
+function openBrief(id,kind){var b,fl,title,meta;
+  if(kind==='ladder'){var d;for(var i=0;i<LADDER.length;i++){if(LADDER[i].id===id){d=LADDER[i];}}b=d.brief||{why:d.w};fl=LADDER_TAG;title=d.h;meta='Build rungs &middot; '+SUBJECT_WORD;}
+  else if(kind==='card'){var c=CARDS[id];b=c.brief||{why:c.p};fl=c.tag?c.tag:'Specialization';title=c.h;meta='Specialize — through the AI lens';}
+  else{var f=findItem(id);b=BRIEFS[id]||{why:f.it.t.replace(/<[^>]+>/g,''),scrip:f.ph.scrip};fl=f.ph.fl;title=f.it.t.replace(/\s*\u2708/,'');meta=f.ph.name+' &middot; '+f.ph.ageLbl;}
+  el('briefFl').innerHTML=fl;
+  el('briefBody').innerHTML='<div class="brief-eyebrow">Briefing</div><h1 class="brief-title">'+title+'</h1><div class="brief-meta">'+meta+'</div>'+buildBlocks(b);
+  el('briefBody').scrollTop=0;
+  var foot=el('completeBtn');
+  if(kind==='card'){foot.style.display='none';}
+  else{foot.style.display='block';var done=(kind==='ladder')?state.math[id]:state.done[id];setCompleteBtn(done);}
+  BRIEF_OPEN=id;BRIEF_KIND=kind;
+  var sc=el('brief');sc.className='brief-screen open';sc.setAttribute('aria-hidden','false');bindQuiz();
+  try{if(!PUSHED){history.pushState({b:1},'');PUSHED=true;}}catch(e){}}
+function closeBrief(fromPop){var sc=el('brief');sc.className='brief-screen';sc.setAttribute('aria-hidden','true');
+  BRIEF_OPEN=null;BRIEF_KIND=null;renderHero();renderPath();renderLadder();renderParentStats();
+  if(!fromPop&&PUSHED){try{history.back();}catch(e){}PUSHED=false;}else{PUSHED=false;}}
+function setCompleteBtn(done){var btn=el('completeBtn');if(done){btn.className='complete-btn did';btn.innerHTML='&#10003; Completed &mdash; tap to undo';}else{btn.className='complete-btn todo';btn.innerHTML='Mark complete';}}
+
+function bindItems(){var items=document.querySelectorAll('#legs .item');
+  for(var i=0;i<items.length;i++){items[i].addEventListener('click',function(e){var id=this.getAttribute('data-id');var t=e.target;
+    if(t&&t.getAttribute&&t.getAttribute('data-box')==='1'){toggleDone(id);return;}openBrief(id,'path');});}}
+function toggleDone(id){var nowOn=!state.done[id];state.done[id]=nowOn;saveDone();renderHero();renderPath();if(nowOn){burst();phaseCheck(id);}}
+function phaseCheck(id){for(var i=0;i<PHASES.length;i++){var ph=PHASES[i];var mine=false,all=true;
+    for(var j=0;j<ph.items.length;j++){if(ph.items[j].id===id){mine=true;}if(!state.done[ph.items[j].id]){all=false;}}
+    if(mine){if(all){toast(ph.name+' &mdash; '+CLEAR_WORD+'!');bigBurst();}else{toast('Logged. Keep going.');}return;}}}
+function bindLadder(){var items=document.querySelectorAll('#rungs .item');
+  for(var i=0;i<items.length;i++){items[i].addEventListener('click',function(e){var id=this.getAttribute('data-math');var t=e.target;
+    if(t&&t.getAttribute&&t.getAttribute('data-box')==='1'){toggleLadder(id);return;}openBrief(id,'ladder');});}}
+function toggleLadder(id){var nowOn=!state.math[id];state.math[id]=nowOn;saveMath();renderLadder();if(nowOn){burst();toast('Rung climbed!');}}
+function bindCards(){var items=document.querySelectorAll('#cardList .dstep.tapp');
+  for(var i=0;i<items.length;i++){items[i].addEventListener('click',function(){openBrief(parseInt(this.getAttribute('data-card'),10),'card');});}}
+function bindSay(){var btns=document.querySelectorAll('.say');for(var i=0;i<btns.length;i++){btns[i].addEventListener('click',function(e){e.stopPropagation();safeSpeak(decodeURIComponent(this.getAttribute('data-say')));});}}
+function bindQuiz(){var opts=el('briefBody').querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){opts[i].addEventListener('click',function(){var qi=this.getAttribute('data-q');var chosen=parseInt(this.getAttribute('data-o'),10);var ans=parseInt(this.getAttribute('data-a'),10);
+    var group=el('briefBody').querySelectorAll('.opt[data-q="'+qi+'"]');
+    for(var j=0;j<group.length;j++){group[j].disabled=true;var oj=parseInt(group[j].getAttribute('data-o'),10);if(oj===ans){group[j].className='opt correct';}else if(oj===chosen){group[j].className='opt wrong';}}
+    var ex=el('briefBody').querySelector('.qex[data-ex="'+qi+'"]');if(ex){ex.className='qex show';}if(chosen===ans){burst();}});}}
+function bindComplete(){el('completeBtn').addEventListener('click',function(){if(!BRIEF_OPEN&&BRIEF_OPEN!==0){return;}
+  if(BRIEF_KIND==='ladder'){var on=!state.math[BRIEF_OPEN];state.math[BRIEF_OPEN]=on;saveMath();setCompleteBtn(on);if(on){bigBurst();toast('Rung climbed!');}}
+  else if(BRIEF_KIND==='path'){var on2=!state.done[BRIEF_OPEN];state.done[BRIEF_OPEN]=on2;saveDone();setCompleteBtn(on2);if(on2){bigBurst();phaseCheck(BRIEF_OPEN);}}});}
+function bindTabs(){var tabs=document.querySelectorAll('#tabs .tab');
+  for(var i=0;i<tabs.length;i++){tabs[i].addEventListener('click',function(){var v=this.getAttribute('data-v');var all=document.querySelectorAll('#tabs .tab');
+    for(var j=0;j<all.length;j++){all[j].className='tab';}this.className='tab on';var views=document.querySelectorAll('.view');for(var k=0;k<views.length;k++){views[k].className='view';}el('v-'+v).className='view on';window.scrollTo(0,0);});}}
+function safeSpeak(txt){try{if(!('speechSynthesis' in window)){return;}window.speechSynthesis.cancel();var u=new window.SpeechSynthesisUtterance(txt);u.rate=.92;u.pitch=1.03;window.speechSynthesis.speak(u);}catch(e){}}
+var toastT=null;function toast(m){var t=el('toast');t.innerHTML=m;t.className='show';if(toastT){clearTimeout(toastT);}toastT=setTimeout(function(){t.className='';},2200);}
+var cvs,ctx,parts=[],raf=null;
+function initFx(){cvs=el('cfx');ctx=cvs.getContext('2d');resizeFx();window.addEventListener('resize',resizeFx);}
+function resizeFx(){if(!cvs){return;}cvs.width=window.innerWidth;cvs.height=window.innerHeight;}
+function spawn(n){var colors=CONFETTI;for(var i=0;i<n;i++){parts.push({x:cvs.width/2+(Math.random()-.5)*160,y:cvs.height*.3,vx:(Math.random()-.5)*7,vy:Math.random()*-9-3,g:.24,s:Math.random()*7+4,c:colors[(Math.random()*colors.length)|0],rot:Math.random()*6,vr:(Math.random()-.5)*.4,life:70+Math.random()*30});}if(!raf){tick();}}
+function tick(){ctx.clearRect(0,0,cvs.width,cvs.height);for(var i=parts.length-1;i>=0;i--){var p=parts[i];p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life--;
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.55);ctx.restore();if(p.life<=0||p.y>cvs.height+30){parts.splice(i,1);}}
+  if(parts.length){raf=window.requestAnimationFrame(tick);}else{raf=null;ctx.clearRect(0,0,cvs.width,cvs.height);}}
+function burst(){spawn(26);}function bigBurst(){spawn(90);}
+function makeStars(){var s=el('stars');var html='';for(var i=0;i<46;i++){html+='<i style="top:'+(Math.random()*70)+'%;left:'+(Math.random()*100)+'%;animation-delay:'+(Math.random()*4).toFixed(1)+'s"></i>';}s.innerHTML=html;}
+function showApp(){el('cover').style.display='none';el('app').style.display='block';renderAll();}
+function renderAll(){renderHero();renderPath();renderLadder();renderLaunch();renderCards();renderParentStats();}
+function beginFlow(){var nm=el('nm').value.replace(/\s+/g,' ').trim();var ar=el('ar').value.replace(/\s+/g,' ').trim();
+  if(!nm){el('nm').focus();el('nm').style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--accent');return;}
+  state.name=nm;state.air=ar;lsSet(K.name,nm);lsSet(K.air,ar);lsSet(K.age,String(state.age));showApp();toast('Welcome, '+nm+'!');bigBurst();}
+function bindParent(){el('pinBtn').addEventListener('click',function(){if(el('pin').value==='2020'){el('pgate').className='pgate hide';el('ppanel').className='ppanel';renderParentStats();}else{el('pin').value='';el('pin').placeholder='Try again';el('pin').style.borderColor='#b1442f';}});
+  el('ageSet').addEventListener('change',function(){var a=parseInt(this.value,10);if(a>=1&&a<=PHASES.length){state.age=a;lsSet(K.age,String(a));renderHero();renderPath();}});
+  el('resetBtn').addEventListener('click',function(){if(window.confirm('Reset all progress? Name stays saved.')){state.done={};state.math={};saveDone();saveMath();renderAll();toast('Progress reset.');}});}
+function init(){loadState();makeStars();initFx();bindTabs();bindParent();bindComplete();
+  el('begin').addEventListener('click',beginFlow);
+  el('nm').addEventListener('keydown',function(e){if(e.keyCode===13){el('ar').focus();}});
+  el('ar').addEventListener('keydown',function(e){if(e.keyCode===13){beginFlow();}});
+  el('backBtn').addEventListener('click',function(){closeBrief(false);});
+  window.addEventListener('popstate',function(){if(BRIEF_OPEN||BRIEF_OPEN===0){closeBrief(true);}});
+  el('editBtn').addEventListener('click',function(){var nm=window.prompt('Name:',state.name);if(nm!==null&&nm.replace(/\s+/g,' ').trim()){state.name=nm.replace(/\s+/g,' ').trim();lsSet(K.name,state.name);}
+    var ar=window.prompt('Company name:',state.air);if(ar!==null){state.air=ar.replace(/\s+/g,' ').trim();lsSet(K.air,state.air);}renderHero();});
+  if(state.name){showApp();}}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+</script>
+</body>
+</html>
